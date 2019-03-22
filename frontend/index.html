@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <h1>data check</h1>
+    <div>
+      name
+      <input type="text" id="dataName" />
+      wpm
+      <input type="text" id="wpm" />
+      accuracy
+      <input type="text" id="accuracy" />
+      <button onclick="datasub();">submit</button>
+    </div>
+
+    <div>
+      name
+      <input id="namee" name="name" type="text" />
+      email
+      <input id="maill" type="email" name="email" id="" />
+      password
+      <input type="password" name="password" id="passwordd" />
+      <button onClick="sub();">Sign up</button>
+    </div>
+    <hr />
+    <h1>enter details here</h1>
+    <!-- <form action="/login" method="POST"> -->
+    <label for=""
+      >username
+      <input id="usern" name="username" type="text" />
+    </label>
+    <label for=""
+      >password
+      <input id="passs" type="password" name="password" />
+    </label>
+    <input onclick="login();" type="submit" value="login" />
+    <!-- </form> -->
+
+    <button onclick="check();">check</button>
+    <script>
+      const username = document.getElementById("namee");
+      const email = document.getElementById("maill");
+      const pass = document.getElementById("passwordd");
+      var uname = document.getElementById("usern");
+      var upass = document.getElementById("passs");
+      const data = { namee: name.value, email: email, pass: pass };
+      function sub() {
+        let date = new Date();
+        day = date.toLocaleDateString();
+        time = date.toLocaleTimeString();
+        reg = day + " on " + time;
+        //   console.log(reg)
+
+        var options = {
+          method: "POST",
+          body: JSON.stringify({
+            username: username.value,
+            email: email.value,
+            pass: pass.value,
+            date: day,
+            time: time
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        fetch("http://localhost:8000/signup", options)
+          .then(res => res.text())
+          .then(message => console.log(message))
+          .catch(error => console.log(error));
+      }
+      function check(){
+        var options = {
+          method: "POST",
+          body: " ",
+          
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        fetch("http://localhost:8000/authCheck", options)
+          .then(res => res.text())
+          .then(message => console.log(message))
+          .catch(error => console.log(error));
+      }
+      
+      function login() {
+        var options = {
+          method: "POST",
+          body: JSON.stringify({
+            username: uname.value,
+            password: upass.value
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        fetch("http://localhost:8000/login", options)
+          .then(res => res.text())
+          .then(message => console.log(message))
+          .catch(error => console.log(error));
+      }
+
+      let dataname = document.getElementById("dataName");
+      let wpm = document.getElementById("wpm");
+      let accuracy = document.getElementById("accuracy");
+
+      function datasub() {
+        var options = {
+          method: "POST",
+          body: JSON.stringify({
+            dataname: dataname.value,
+            wpm: wpm.value,
+            accuracy: accuracy.value    
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        };
+        fetch("http://localhost:8000/dataSubmit", options)
+          .then(res => res.text())
+          .then(message => console.log(message))
+          .catch(error => console.log(error));
+      }
+    </script>
+  </body>
+</html>
+
+<!-- <div>
+        <form>
+            Username: <input type="text" id="usernameField">
+            Password: <input type="password" id="passwordField">
+        </form>
+        <div>
+            <button onclick="addUser()">Create A User</button>
+            <button onclick="getUsers()">Get Users</button>
+            <hr>
+            <button onclick="createFile()">Create File</button>
+            <button onclick="getData()">Read File</button>
+            <button onclick="deleteFile()">Delete File</button>
+            <hr>
+            Data from server:
+            <div id="demo"></div>
+            <hr>
+            <form action="/profile" method="POST" enctype="multipart/form-data">
+                <input type="file" name="profilePicture" multiple />
+                <input type="submit" value="Upload Picture">
+            </form>
+    
+            <hr>
+            <form action="/login" method="post">
+                <div>
+                    <label>Username:</label>
+                    <input type="text" name="username"/>
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" name="password"/>
+                </div>
+                <div>
+                    <input type="submit" value="Log In"/>
+                </div>
+            </form>
+    
+        </div>
+        <script>
+            function getUsers() {
+    
+                fetch('http://localhost:8000/getAllUsers')
+                    .then((res) => res.json())
+                    .then((users) => {
+                        console.log(users)
+                        demo.innerHTML = ""
+                        for (var user of users) {
+                            demo.innerHTML += `<li>My name is ${user.username} and password is ${user.password}</li>`
+                        }
+                    })
+                    .catch((error) => console.log(error))
+    
+            }
+            function getData() {
+    
+                fetch('http://localhost:8000/getData')
+                    .then((res) => res.text())
+                    .then((data) => {
+                        console.log(data)
+                        document.getElementById("demo").innerText = data
+    
+                    })
+                    .catch((error) => console.log(error))
+    
+            }
+            function createFile() {
+    
+                var options = {
+                    method: 'POST',
+                    body: JSON.stringify({}),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                fetch('http://localhost:8000/createFile', options)
+                    .then((res) => res.text())
+                    .then((message) => console.log(message))
+                    .catch((error) => console.log(error))
+    
+            }
+            function deleteFile() {
+    
+                var options = {
+                    method: 'DELETE',
+                    body: JSON.stringify({}),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                fetch('http://localhost:8000/deleteFile', options)
+                    .then((res) => res.text())
+                    .then((message) => console.log(message))
+                    .catch((error) => console.log(error))
+    
+            }
+    
+    
+            function addUser() {
+    
+                var options = {
+                    method: 'POST',
+                    body: JSON.stringify({ username: usernameField.value, password: passwordField.value }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+    
+                }
+                fetch('http://localhost:8000/addUser', options)
+                    .then((res) => res.text())
+                    .then((message) => console.log(message))
+                    .catch((error) => console.log(error))
+    
+            }
+    
+        </script>
+    
+    </div> -->
