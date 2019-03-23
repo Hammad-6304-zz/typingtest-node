@@ -16,6 +16,9 @@ server.get('/getall',(req,res)=>{
         res.send(result)
     })
 })
+server.get('/',(req,res)=>{
+  res.send("hello")
+})
 
 server.post('/logout',(req,res)=>{
     req.session.destroy()
