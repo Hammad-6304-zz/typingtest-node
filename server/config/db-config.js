@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var db_url = process.env.DB_URL || 'mongodb://localhost:27017/typingUSERTEST'
+var db_url ='mongodb+srv://fyp:fyp@fyp-mrp9t.mongodb.net/test?retryWrites=true'
 mongoose.connect(db_url, { useNewUrlParser: true })
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'DB connection error:'));

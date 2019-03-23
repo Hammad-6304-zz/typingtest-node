@@ -7,9 +7,10 @@ const userSchema = {
   date: String,
   time: String,
   firstName:String,
-  lastName:String
+  lastName:String,
+  img:String,
+  facebook:String
 };
-
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;

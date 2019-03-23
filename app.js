@@ -1,20 +1,22 @@
 var express = require('express');
 var bodyParser = require("body-parser");
+var cors = require('cors');
 
 
-var users = [
-    { id: 1, username: "hammad", password: 'abcd1234' },
-    { id: 2, username: "hello", password: '1234' },
-]
 
 var server = express()
+
+server.use(cors());
+// server.use((req,res,next)=>{res.setHeader("Access-Control-Allow-Origin","*")
+// next()}
+// )
 
 server.use(express.static('./frontend'))
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
 require('./server/config/db-config');
-require('./server/config/passport-config')(server, users);
+require('./server/config/passport-config')(server);
 require('./server/routes/all-routes')(server);
 
 server.use((err, req, res, next) => {

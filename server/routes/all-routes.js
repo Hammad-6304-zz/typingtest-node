@@ -1,11 +1,9 @@
 var passport = require("passport");
-var fs = require("fs");
 var session = require("express-session")
 
 var User = require("../models/model-users");
 var Results = require("../models/model-data")
 var Data = require("../models/model-data");
-var upload = require("../config/multer-config");
 
 module.exports = function(server) {
   
@@ -51,6 +49,9 @@ server.post('/logout',(req,res)=>{
     
   });
 
+  // server.get('/fb/login', passport.authenticate('facebook'),function(req,res){
+  //   res.json({logg:true,userData:req.user})
+  // });
   server.get("/dashboard", function(req, res) {
     if (!req.isAuthenticated()) {
       res.send("Login Required to visit this page");
@@ -67,7 +68,9 @@ server.post('/logout',(req,res)=>{
     var data = new Data({
       dataname: req.body.dataname,
       wpm: req.body.wpm,
-      accuracy: req.body.accuracy
+      accuracy: req.body.accuracy,
+      date : req.body.date,
+      time : req.body.time
     });
     data.save((err, data) => {
       if (err) {
