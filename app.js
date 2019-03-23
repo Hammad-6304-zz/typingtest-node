@@ -1,15 +1,12 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var cors = require('cors');
-
+var port = process.env.port || 8000;
 
 
 var server = express()
 
 server.use(cors());
-// server.use((req,res,next)=>{res.setHeader("Access-Control-Allow-Origin","*")
-// next()}
-// )
 
 server.use(express.static('./frontend'))
 server.use(bodyParser.urlencoded({ extended: true }))
@@ -24,4 +21,4 @@ server.use((err, req, res, next) => {
     res.status(500).send("Error Catched by error handler.")
 })
 
-server.listen(8000, () => console.log("typing server is running"))
+server.listen(port, () => console.log("typing server is running"))
